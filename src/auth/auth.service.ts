@@ -17,7 +17,9 @@ export class AuthService {
   async sendAuthCode(authDto: AuthDto) {
     const code: string = randomUUID();
     authDto.authCode = code;
-    // authDto.authEffectiveDate = new Date().setMinutes(new Date().getMinutes() + 30);
+    const now: Date = new Date();
+    const effectiveDate = new Date(now.setMinutes(now.getMinutes() + 30));
+    authDto.authEffectiveDate = effectiveDate;
     const queryResult = await this.authRepository.save(authDto);
 
     await this.mailerService.sendMail({
@@ -43,14 +45,13 @@ export class AuthService {
     const effectiveDate: Date = result.authEffectiveDate;
     const now: Date = new Date();
     if (now < effectiveDate) {
-      // console.log('유효기간 안 넘음');
-      return this.authRepository.update(
+      this.authRepository.update(
         { userEmail: userEmail },
         { authStatus: 'success' },
       );
+      return '이메일 인증이 완료되었습니다.';
     } else {
-      // console.log('유효기간 넘음');
-      return 'Effective date expire.';
+      return '이메일 인증 유효기간이 만료되었습니다. 이메일 인증을 다시 진행해주세요.';
     }
   }
 }
