@@ -3,8 +3,9 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entity/user.entity';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { Auth } from './auth/entity/auth.entity';
+import { GoogleAuthModule } from './google-auth/google-auth.module';
+import { MailAuthModule } from './mail-auth/mail-auth.module';
+import { MailAuth } from './mail-auth/entity/auth.entity';
 
 @Module({
   imports: [
@@ -17,14 +18,15 @@ import { Auth } from './auth/entity/auth.entity';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DATABASE,
-      entities: [User, Auth],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     // - 설정 모듈 //
 
     // 개발 모듈 //
     UserModule,
-    AuthModule,
+    GoogleAuthModule,
+    MailAuthModule,
     // - 개발 모듈 //
   ],
   controllers: [],

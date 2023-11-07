@@ -31,4 +31,7 @@ export class User {
 
   @Column({ type: 'boolean', nullable: true })
   notice: boolean;
+
+  @Column({ default: 'local' })
+  provider: string;
 }

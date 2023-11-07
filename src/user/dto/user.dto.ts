@@ -3,4 +3,5 @@ export class UserDto {
   userPassword: string;
   userNickname: string;
   profileUrl: string | null;
+  provider: string;
 }

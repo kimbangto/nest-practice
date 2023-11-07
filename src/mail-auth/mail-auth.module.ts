@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
+import { MailAuthController } from './mail-auth.controller';
+import { MailAuthService } from './mail-auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Auth } from './entity/auth.entity';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { MailAuth } from './entity/auth.entity';
 import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Auth]),
+    TypeOrmModule.forFeature([MailAuth]),
     MailerModule.forRootAsync({
       useFactory: () => ({
         transport: {
@@ -26,7 +26,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     }),
   ],
   exports: [TypeOrmModule],
-  providers: [AuthService],
-  controllers: [AuthController],
+  providers: [MailAuthService],
+  controllers: [MailAuthController],
 })
-export class AuthModule {}
+export class MailAuthModule {}

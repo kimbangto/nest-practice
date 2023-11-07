@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity({ name: 'auth_table' })
-export class Auth {
+@Entity({ name: 'mail_auth_table' })
+export class MailAuth {
   @PrimaryColumn()
   userEmail: string;
 
