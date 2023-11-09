@@ -13,8 +13,8 @@ export class UserController {
   }
 
   @Get()
-  findUser(@Req() req): Promise<User[]> {
-    return this.userService.findUser(req.userEmail);
+  findUser(@Req() req) {
+    return this.userService.findUserbyEmail(req.userEmail);
   }
 
   @Post('join')

@@ -25,9 +25,11 @@ async function bootstrap() {
   app.use(passport.initialize());
   app.use(passport.session());
   passport.serializeUser(function (user, done) {
+    console.log('serializeUser', user);
     done(null, user);
   });
   passport.deserializeUser(function (user, done) {
+    console.log('deserializeUser', user);
     done(null, user);
   });
   await app.listen(4000);

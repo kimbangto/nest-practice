@@ -15,13 +15,16 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findUser(userEmail: string) {
-    return await this.userRepository.findBy({ userEmail: userEmail });
+  async findUserbyEmail(userEmail: string) {
+    return await this.userRepository.findOneBy({ userEmail: userEmail });
   }
 
   async createUser(userDto: UserDto) {
     return this.userRepository.save(userDto);
   }
 
-  async login() {}
+  async login(user) {
+    console.log(user);
+    return '좃같다';
+  }
 }

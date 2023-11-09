@@ -13,11 +13,16 @@ export class GoogleAuthController {
 
   @Get('login')
   @UseGuards(GoogleAuthGuard)
-  googleLogin(@Req() req) {}
+  googleLogin(@Req() req) {
+    console.log(req);
+  }
 
   @Get('redirect')
   @UseGuards(GoogleAuthGuard)
   async googleRedirect(@Req() req) {
-    return this.googleAuthService.googleRedirect(req.user);
+    console.log(req);
+
+    return '허허 시팔';
+    // return this.googleAuthService.googleRedirect(req.user);
   }
 }
