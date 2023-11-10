@@ -15,6 +15,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
   }
 
   authorizationParams(): { [key: string]: string } {
+    console.log('strategy, authorizationParams');
     return {
       access_type: 'offline',
       prompt: 'select_account',
@@ -27,12 +28,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     profile: Profile,
     done: VerifyCallback,
   ): Promise<void> {
+    console.log('strategy, validate');
+
     const { name, emails, provider, photos } = profile;
     const user = {
       userEmail: emails[0].value,
       userNickname: name.givenName,
       provider: provider,
       profileUrl: photos[0].value,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     };
     return done(null, user);
   }

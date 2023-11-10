@@ -1,28 +1,34 @@
-import { Controller, Get, UseGuards, Req, Res } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Res, Post } from '@nestjs/common';
 import { GoogleAuthService } from './google-auth.service';
 import { GoogleAuthGuard } from './google-auth-guard';
-import { UserDto } from 'src/user/dto/user.dto';
-import { UserService } from 'src/user/user.service';
+import axios from 'axios';
 
 @Controller('google-auth')
 export class GoogleAuthController {
-  constructor(
-    private readonly googleAuthService: GoogleAuthService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly googleAuthService: GoogleAuthService) {}
 
   @Get('login')
   @UseGuards(GoogleAuthGuard)
   googleLogin(@Req() req) {
-    console.log(req);
+    console.log('controller, login');
   }
 
   @Get('redirect')
   @UseGuards(GoogleAuthGuard)
   async googleRedirect(@Req() req) {
-    console.log(req);
+    console.log('controller, redirect');
 
-    return '허허 시팔';
+    return 'success';
     // return this.googleAuthService.googleRedirect(req.user);
+  }
+
+  @Post('get-user')
+  async getUser(@Req() req) {
+    const accessToken: string = await req.body;
+    const result = await axios.get(
+      'https://www.googleapis.com/auth/userinfo.profile?access_token=' +
+        accessToken,
+    );
+    console.log(result);
   }
 }

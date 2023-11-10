@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { GoogleAuthModule } from './google-auth/google-auth.module';
 import { MailAuthModule } from './mail-auth/mail-auth.module';
 import { MailAuth } from './mail-auth/entity/auth.entity';
+import { KakaoAuthController } from './kakao-auth/kakao-auth.controller';
+import { KakaoAuthModule } from './kakao-auth/kakao-auth.module';
 
 @Module({
   imports: [
@@ -27,6 +29,7 @@ import { MailAuth } from './mail-auth/entity/auth.entity';
     UserModule,
     GoogleAuthModule,
     MailAuthModule,
+    KakaoAuthModule,
     // - 개발 모듈 //
   ],
   controllers: [],

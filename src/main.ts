@@ -2,36 +2,21 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import session from 'express-session';
 import passport from 'passport';
-import { Transport } from '@nestjs/microservices';
+import { sessionOption } from './session/session-option';
+import { deserializeUser, serializeUser } from './util/serializer';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   app.enableCors();
-  app.connectMicroservice({
-    transport: Transport.REDIS,
-    options: {
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-    },
-  });
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-    }),
-  );
+
+  app.use(session(sessionOption));
+
   app.use(passport.initialize());
   app.use(passport.session());
-  passport.serializeUser(function (user, done) {
-    console.log('serializeUser', user);
-    done(null, user);
-  });
-  passport.deserializeUser(function (user, done) {
-    console.log('deserializeUser', user);
-    done(null, user);
-  });
+
+  // serializeUser();
+  // deserializeUser();
+
   await app.listen(4000);
 }
 bootstrap();
