@@ -5,13 +5,11 @@ import { KakaoAuthService } from './kakao-auth.service';
 
 @Controller('kakao-auth')
 export class KakaoAuthController {
-  constructor(
-    private readonly kakaoAuthService: KakaoAuthService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly kakaoAuthService: KakaoAuthService) {}
+
   @Post('login')
   async kakaoLogin(@Body() body) {
     console.log('카카오 컨트롤러 진입');
-    return this.kakaoAuthService.getKakaoUser(body.access_token);
+    return await this.kakaoAuthService.getKakaoUser(body.code);
   }
 }

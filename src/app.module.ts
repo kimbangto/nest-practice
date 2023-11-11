@@ -8,6 +8,7 @@ import { MailAuthModule } from './mail-auth/mail-auth.module';
 import { MailAuth } from './mail-auth/entity/auth.entity';
 import { KakaoAuthController } from './kakao-auth/kakao-auth.controller';
 import { KakaoAuthModule } from './kakao-auth/kakao-auth.module';
+import { NaverAuthModule } from './naver-auth/naver-auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { KakaoAuthModule } from './kakao-auth/kakao-auth.module';
     GoogleAuthModule,
     MailAuthModule,
     KakaoAuthModule,
+    NaverAuthModule,
     // - 개발 모듈 //
   ],
   controllers: [],

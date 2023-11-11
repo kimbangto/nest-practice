@@ -9,13 +9,9 @@ import { GoogleSerializer } from './serializer';
 import { UserService } from 'src/user/user.service';
 
 @Module({
-  imports: [
-    PassportModule.register({
-      session: true,
-    }),
-    TypeOrmModule.forFeature([User]),
-  ],
-  providers: [GoogleAuthService, GoogleStrategy, GoogleSerializer, UserService],
+  imports: [TypeOrmModule.forFeature([User])],
+  // providers: [GoogleAuthService, GoogleStrategy, GoogleSerializer, UserService],
+  providers: [GoogleAuthService, UserService],
   controllers: [GoogleAuthController],
 })
 export class GoogleAuthModule {}
