@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entity/user.entity';
 import { UserDto } from './dto/user.dto';
@@ -12,9 +12,9 @@ export class UserController {
     return this.userService.findAllUsers();
   }
 
-  @Get()
-  findUser(@Req() req) {
-    return this.userService.findUserbyEmail(req.userEmail);
+  @Get('duplicate')
+  findUser(@Query() { userEmail }) {
+    return this.userService.isEmailDuplicate(userEmail);
   }
 
   @Post('join')

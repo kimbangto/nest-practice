@@ -21,30 +21,40 @@ export class MailAuthService {
     mailAuthDto.authEffectiveDate = new Date(
       new Date().setMinutes(new Date().getMinutes() + 30),
     );
-    const queryResult = await this.mailAuthRepository.save(mailAuthDto);
-
-    await this.mailerService.sendMail(
-      mailTemplate(mailAuthDto.userEmail, code),
-    );
-
-    return queryResult;
+    await this.mailAuthRepository.save(mailAuthDto).catch((err) => {
+      console.log(err);
+      return 'create fail';
+    });
+    await this.mailerService
+      .sendMail(mailTemplate(mailAuthDto.userEmail, code))
+      .catch((err) => {
+        console.log(err);
+        this.mailAuthRepository.delete(mailAuthDto.userEmail);
+        return 'mail send fail';
+      });
+    await this.mailAuthRepository
+      .save(mailAuthDto)
+      .catch((err) => 'send update fail');
+    return 'ready';
   }
 
-  async checkAuthCode(mailAuthDto: MailAuthDto) {
+  async authorize(mailAuthDto: MailAuthDto) {
     const userEmail: string = mailAuthDto.userEmail;
     const result: MailAuth = await this.mailAuthRepository.findOne({
       where: { userEmail },
     });
+    if (mailAuthDto.authCode !== result.authCode) return 'code does not match';
     const effectiveDate: Date = result.authEffectiveDate;
     const now: Date = new Date();
     if (now < effectiveDate) {
-      this.mailAuthRepository.update(
-        { userEmail: userEmail },
-        { authStatus: 'success' },
-      );
-      return '이메일 인증이 완료되었습니다.';
+      this.mailAuthRepository
+        .update({ userEmail: userEmail }, { authStatus: 'success' })
+        .catch((err) => {
+          return 'update check fail';
+        });
+      return 'success';
     } else {
-      return '이메일 인증 유효기간이 만료되었습니다. 이메일 인증을 다시 진행해주세요.';
+      return 'expire auth date';
     }
   }
 }

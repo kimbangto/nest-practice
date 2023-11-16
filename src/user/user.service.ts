@@ -15,6 +15,14 @@ export class UserService {
     return this.userRepository.find();
   }
 
+  async isEmailDuplicate(userEmail: string) {
+    const result: string | null = (
+      await this.userRepository.findOneBy({ userEmail: userEmail })
+    )?.userEmail;
+    if (result) return true;
+    return false;
+  }
+
   async findUserbyUserNo(userNo: number) {
     return await this.userRepository.findOneBy({ userNo: userNo });
   }
@@ -34,6 +42,5 @@ export class UserService {
 
   async login(user) {
     console.log(user);
-    return '좃같다';
   }
 }

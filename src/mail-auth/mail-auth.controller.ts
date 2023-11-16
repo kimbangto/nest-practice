@@ -11,8 +11,8 @@ export class MailAuthController {
     return this.mailAuthService.sendAuthCode(mailAuthDto);
   }
 
-  @Get('check')
-  checkAuthCode(@Query() mailAuthDto: MailAuthDto) {
-    return this.mailAuthService.checkAuthCode(mailAuthDto);
+  @Get('authorize')
+  authorize(@Query() mailAuthDto: MailAuthDto) {
+    return this.mailAuthService.authorize(mailAuthDto);
   }
 }

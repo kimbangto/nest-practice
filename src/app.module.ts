@@ -1,12 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/entity/user.entity';
 import { ConfigModule } from '@nestjs/config';
 import { GoogleAuthModule } from './google-auth/google-auth.module';
 import { MailAuthModule } from './mail-auth/mail-auth.module';
-import { MailAuth } from './mail-auth/entity/auth.entity';
-import { KakaoAuthController } from './kakao-auth/kakao-auth.controller';
 import { KakaoAuthModule } from './kakao-auth/kakao-auth.module';
 import { NaverAuthModule } from './naver-auth/naver-auth.module';
 

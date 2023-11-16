@@ -13,13 +13,6 @@ export class NaverAuthService {
         `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${process.env.NAVER_CLIENT_ID}&client_secret=${process.env.NAVER_CLIENT_SECRET}&code=${code}&state=${process.env.NAVER_STATE}  
     `,
       )
-      // .post('https://nid.naver.com/oauth2.0/token', {
-      //   grant_type: 'authorization_code',
-      //   code: code,
-      //   client_id: process.env.NAVER_CLIENT_ID,
-      //   client_secret: process.env.NAVER_CLIENT_SECRET,
-      //   state: process.env.NAVER_STATE,
-      // })
       .catch((err) => 'cannot get token');
     console.log(getToken);
 
@@ -37,7 +30,7 @@ export class NaverAuthService {
     );
     if (findUser === null) {
       const userDto: UserDto = new UserDto();
-      userDto.userEmail = user.email;
+      userDto.userEmail = user.email.split('@')[0] + '@naver.com';
       userDto.profileUrl = user.profile_image;
       userDto.userNickname = user.name;
       userDto.provider = 'naver';
